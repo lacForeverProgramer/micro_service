@@ -1,6 +1,14 @@
 server:
   port: 8081
-demo:
-  book:
-    writer: lll
-    name: kkkk
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://localhost:3307/lc_plateform
+    username: root
+    password: 666888
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+mybatis:
+  typeAliasesPackage: com.lacForever.model
+  mapperLocations: classpath:mapper/*.xml
