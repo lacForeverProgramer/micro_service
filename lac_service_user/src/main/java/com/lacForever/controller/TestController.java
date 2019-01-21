@@ -1,14 +1,21 @@
 package com.lacForever.controller;
 
+import com.lacForever.annotation.Cach;
 import com.lacForever.dao.LcUserMapper;
 import com.lacForever.model.LcUser;
 import com.lacForever.response.ResponseMap;
+import com.lacForever.service.TheThirdPartyService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * @Author: Liujiahao
@@ -17,14 +24,34 @@ import java.util.logging.Logger;
 @RestController
 public class TestController {
 
+    private static Logger logger = Logger.getLogger(TestController.class);
+
     @Autowired
-    public LcUserMapper mapper;
+    private LcUserMapper mapper;
+    @Autowired
+    private TheThirdPartyService theThirdPartyService;
 
     @GetMapping(value = "/test")
-    public Map sayHello(){
+    @Cach(key = "user",type = Map.class,expire = 20*60*60*24L)
+    public Map sayHello(@RequestParam(name = "ok",defaultValue = "abc") String ok){
+        logger.info("this is info");
       Map okMap =  ResponseMap.getInstance().getOKMap();
         LcUser user = mapper.selectByPrimaryKey(1);
         okMap.put("info",user);
         return okMap;
+    }
+
+    @GetMapping(value = "/testPost")
+    @Cach(key = "baiduToken",type = Map.class,expire = 20*60*60*24L)
+    public Map getEmotion(){
+        Map okMap = ResponseMap.getInstance().getOKMap();
+       okMap.put("info",theThirdPartyService.getAuth());
+        return okMap;
+    }
+
+    public static void main(String  [] args){
+        Map map = new HashMap();
+        map.put("sss","ssss");
+        System.out.println(map.get("sffff"));
     }
 }

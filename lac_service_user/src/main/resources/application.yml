@@ -29,6 +29,7 @@ spring:
         max-idle: 8
         ## 连接池中的最小空闲连接
         min-idle: 0
+
         ## 连接超时时间（毫秒）
     timeout: 0
 mybatis:
