@@ -41,27 +41,23 @@ public class AopCachHandle {
         //根据类名、方法名和参数生成key
         final String key = parseKey(cach.key(), method, point.getArgs());
             Object obj = redisTemplate.opsForValue().get(key);
-            System.out.println(obj);
-
-
-//        System.out.println(obj);
-//        if(null == obj){
-//           logger.info("<============ redis 中不存在该记录 从数据库查找=============>");
-//            try {
-//                obj = point.proceed();
-//                if(obj !=null){
-//                    if(cach.expire()>0){
-//                        redisTemplate.opsForValue().set(cach.key(),obj,cach.expire(),TimeUnit.SECONDS);
-//                    }else{
-//                        redisTemplate.opsForValue().set(cach.key(),obj);
-//                    }
-//                }
-//            } catch (Throwable throwable) {
-//                logger.error("<======================cach 执行异常:{}============================>",throwable);
-//            }
-//            return obj;
-//        }
-        return null;
+        if(null == obj){
+           logger.info("<============ redis 中不存在该记录 从数据库查找=============>");
+            try {
+                obj = point.proceed();
+                if(obj !=null){
+                    if(cach.expire()>0){
+                        redisTemplate.opsForValue().set(key,obj,cach.expire(),TimeUnit.SECONDS);
+                    }else{
+                        redisTemplate.opsForValue().set(key,obj);
+                    }
+                }
+            } catch (Throwable throwable) {
+                logger.error("<======================cach 执行异常:{}============================>",throwable);
+            }
+            return obj;
+        }
+        return obj;
     }
     /**
       * 获取被拦截方法对象
@@ -90,6 +86,6 @@ public class AopCachHandle {
         for (int i = 0; i < parameterNames.length; i++) {
             key = key.replace(parameterNames[i] + "", args[i] + "");
         }
-        return method.getName() + key;
+        return method.getName() +"_"+ key;
     }
 }

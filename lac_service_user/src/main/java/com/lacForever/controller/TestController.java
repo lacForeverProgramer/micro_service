@@ -1,5 +1,6 @@
 package com.lacForever.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.lacForever.annotation.Cach;
 import com.lacForever.dao.LcUserMapper;
 import com.lacForever.model.LcUser;
@@ -33,7 +34,7 @@ public class TestController {
 
     @GetMapping(value = "/test")
     @Cach(key = "user",type = Map.class,expire = 20*60*60*24L)
-    public Map sayHello(@RequestParam(name = "ok",defaultValue = "abc") String ok){
+    public Map sayHello(){
         logger.info("this is info");
       Map okMap =  ResponseMap.getInstance().getOKMap();
         LcUser user = mapper.selectByPrimaryKey(1);
@@ -42,10 +43,10 @@ public class TestController {
     }
 
     @GetMapping(value = "/testPost")
-    @Cach(key = "baiduToken",type = Map.class,expire = 20*60*60*24L)
     public Map getEmotion(){
         Map okMap = ResponseMap.getInstance().getOKMap();
-       okMap.put("info",theThirdPartyService.getAuth());
+      JSON json = (JSON) JSON.parse(theThirdPartyService.getAuth());
+       okMap.put("info",json);
         return okMap;
     }
 
