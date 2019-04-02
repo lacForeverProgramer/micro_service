@@ -1,0 +1,11 @@
+server:
+  port: 8090
+banner:
+  location:
+   classpath: resources/
+spring:
+  devtools:
+    restart:
+      trigger-file: application.yml
+logging:
+  config: classpath:logback.xml

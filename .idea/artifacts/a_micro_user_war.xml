@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="a_micro_user:war">
+    <output-path>$PROJECT_DIR$/a_micro_user/target</output-path>
+    <root id="archive" name="a_micro_user-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="a_micro_user:war exploded" />
+    </root>
+  </artifact>
+</component>

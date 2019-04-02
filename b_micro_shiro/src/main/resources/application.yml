@@ -1,0 +1,22 @@
+server:
+   port: 8088
+spring:
+   application:
+      name: shiro
+   datasource:
+      url: jdbc:mysql://localhost:3307/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false
+      username: root
+      password: caojiahui...
+      driver-class-name: com.mysql.jdbc.Driver
+   jpa:
+      database: mysql
+      showSql: true
+      hibernate:
+         ddlAuto: update
+      properties:
+         hibernate:
+            dialect: org.hibernate.dialect.MySQL5Dialect
+            format_sql: true
+   devtools:
+     restart:
+       trigger-file: application.yml
