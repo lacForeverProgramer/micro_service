@@ -34,21 +34,22 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String, String> filterChainDefinitionMap = new HashMap<String, String>();
 //        shiroFilterFactoryBean.setLoginUrl("login.html");
-//        filterChainDefinitionMap.put("/v1/authc/admin", "Llll[admin]");
+
 //        shiroFilterFactoryBean.setUnauthorizedUrl("/v1/unauthc");
         //        filterChainDefinitionMap.put("/v1/authc/renewable", "perms[Create,Update,Retrieve]");
 //        shiroFilterFactoryBean.setSuccessUrl("/v1/home/index");
-        filterChainDefinitionMap.put("/v1/authc/index", "authc");
-
 //        filterChainDefinitionMap.put("/v1/authc/index", "authc");
-        filterChainDefinitionMap.put("/v1/login", "anon");
-        filterChainDefinitionMap.put("/v1/authc/**", "authc");
+//        filterChainDefinitionMap.put("/v1/authc/index", "authc");
+//        filterChainDefinitionMap.put("/v1/login", "anon");
+//        filterChainDefinitionMap.put("/v1/authc/**", "authc");
+        filterChainDefinitionMap.put("/v1/authc/admin", "roles[admin]");
+
 
         //自定义过滤器
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         Map<String, Filter> filterMap = new LinkedHashMap<>();
         filterMap.put("authc", new CaptchaFormAuthenticationFilter());//登录权限
-        filterMap.put("Llll",new Llll());//角色权限
+        filterMap.put("roles",new Llll());//角色权限
         shiroFilterFactoryBean.setFilters(filterMap);
 
         return shiroFilterFactoryBean;

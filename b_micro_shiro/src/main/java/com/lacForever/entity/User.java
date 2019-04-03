@@ -83,7 +83,7 @@ public class User implements Serializable{
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", salt='" + salt + '\'' +
-                ", roles=" + roles +
+                ", roles=" + roles.get(0).getRole() +
                 '}';
     }
 }
